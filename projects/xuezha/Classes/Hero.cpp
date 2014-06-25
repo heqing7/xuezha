@@ -101,7 +101,7 @@ void Hero::ccTouchEnded(CCTouch* touch, CCEvent* event)
 
 void Hero::hurt()
 {
-    CCSprite *explode = CCSprite::create("hehe.png");
+    CCSprite *explode = CCSprite::create("fuck.png");
     ccBlendFunc cb = { GL_SRC_ALPHA, GL_ONE };
     //explode->setBlendFunc(cb);
     explode->setPosition(ccp(getPositionX(), getPositionY()+ getSize().height / 2));
@@ -112,7 +112,23 @@ void Hero::hurt()
 
     CCCallFuncN *removeExplode = CCCallFuncN::create(explode, callfuncN_selector(Hero::removeExplode));
     explode->runAction(CCScaleBy::create(0.3, 2, 2));
-    explode->runAction(CCSequence::create(CCFadeOut::create(1), removeExplode, NULL));
+    explode->runAction(CCSequence::create(CCFadeOut::create(0.5), removeExplode, NULL));
+}
+
+void Hero::capture()
+{
+    CCSprite *explode = CCSprite::create("hehe.png");
+    ccBlendFunc cb = { GL_SRC_ALPHA, GL_ONE };
+    //explode->setBlendFunc(cb);
+    explode->setPosition(ccp(getPositionX(), getPositionY() + getSize().height / 2));
+    //explode->setRotation(CCRANDOM_0_1() * 360);
+    explode->setScale(0.75);
+    CCNode* parent = getParent();
+    getParent()->addChild(explode, 99);
+
+    CCCallFuncN *removeExplode = CCCallFuncN::create(explode, callfuncN_selector(Hero::removeExplode));
+    explode->runAction(CCScaleBy::create(0.3, 2, 2));
+    explode->runAction(CCSequence::create(CCFadeOut::create(0.5), removeExplode, NULL));
 }
 
 void Hero::removeExplode(CCNode *pSender)

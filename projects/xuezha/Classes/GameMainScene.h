@@ -20,6 +20,8 @@ public:
 
     virtual void keyBackClicked();//Android ·µ»Ø¼ü
 
+    virtual void onExit();
+
 protected:
 
 	void autoNewWordObj();

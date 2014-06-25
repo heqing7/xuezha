@@ -43,6 +43,16 @@ static char* g_orgPoem[] =
 	"山",
 };
 
+static char* g_errWords[] = 
+{
+    "撸",
+    "呵",
+    "哈",
+    "啊",
+    "呵",
+    "撸",
+};
+
 CCScene* GameMainScene::scene()
 {
 	do 
@@ -62,6 +72,11 @@ bool GameMainScene::init()
 	do 
 	{
 		CC_BREAK_IF(!CCLayer::init());
+
+        m_curWordIndex = 0;
+        m_genCnt = 0;
+        m_poem = NULL;
+
 		CCLayerColor* pBGLayer = CCLayerColor::create(ccColor4B(ccc4(255,255,255,255)));
 		CC_BREAK_IF(!pBGLayer);
 		this->addChild(pBGLayer);
@@ -75,14 +90,11 @@ bool GameMainScene::init()
 	
 		m_hero->setPosition(ccp(visibleSize.width / 2, m_hero->getSize().height / 2));
 
-		m_curWordIndex = 0;
-		m_genCnt = 0;
-
 		m_poem = CCArray::createWithCapacity(100);
 		m_poem->retain();
 
-        m_content = new WordSource();
-        m_content->initWiteFilePath();
+//         m_content = new WordSource();
+//         m_content->initWiteFilePath();
 
         this->setKeypadEnabled(true);//监听android 按键
 
@@ -91,6 +103,13 @@ bool GameMainScene::init()
 		return true;
 	} while (0);
 	return false;
+}
+
+
+void GameMainScene::onExit()
+{
+    CC_SAFE_RELEASE(m_poem);
+    CCLayer::onExit();
 }
 
 void GameMainScene::keyBackClicked()
@@ -152,13 +171,14 @@ void GameMainScene::checkCapturedAndMissed()
 			{
 				if (word->isEquilWord(base.c_str()))
 				{
+                    m_hero->capture();
 					rst = g_orgPoem[m_curWordIndex - 1];
 					m_result.push_back(rst);
 				}
-                //else
-                //{
+                else
+                {
                     m_hero->hurt();
-                //}
+                }
 				word->setVisible(false);
 				m_poem->removeObject(word);
 			}
@@ -185,17 +205,33 @@ void GameMainScene::autoNewWordObj()
 	
 	do 
 	{
-		CC_BREAK_IF(m_curWordIndex >= sizeof(g_orgPoem) / sizeof(char*));
-		std::string word = g_orgPoem[m_curWordIndex++];
+        if (m_genCnt % 3 != 0)
+        {
+            CC_BREAK_IF(m_curWordIndex >= sizeof(g_orgPoem) / sizeof(char*));
+            std::string word = g_orgPoem[m_curWordIndex++];
 #ifdef _WIN32
-		GBKToUTF(word);
+            GBKToUTF(word);
 #endif
-		int track = (int)(3 * CCRANDOM_0_1());
-		CCAssert(track < 3, "error number");
-		CCSprite* pWord = Word::CreateWithTrack(track, word);
-		CC_BREAK_IF(!pWord);
-		m_poem->addObject(pWord);
-		this->addChild(pWord, 90);
+            int track = (int)(3 * CCRANDOM_0_1());
+            CCAssert(track < 3, "error number");
+            CCSprite* pWord = Word::CreateWithTrack(track, word);
+            CC_BREAK_IF(!pWord);
+            m_poem->addObject(pWord);
+            this->addChild(pWord, 90);
+        }
+        else
+        {
+            std::string word = g_errWords[m_curWordIndex % (sizeof(g_errWords) / sizeof(char*))];
+#ifdef _WIN32
+            GBKToUTF(word);
+#endif
+            int track = (int)(3 * CCRANDOM_0_1());
+            CCAssert(track < 3, "error number");
+            CCSprite* pWord = Word::CreateWithTrack(track, word);
+            CC_BREAK_IF(!pWord);
+            m_poem->addObject(pWord);
+            this->addChild(pWord, 90);
+        }
 
 	} while (0);
 }

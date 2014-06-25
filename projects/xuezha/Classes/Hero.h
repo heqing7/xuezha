@@ -94,6 +94,8 @@ public:
 
     void hurt();
 
+    void capture();
+
     void removeExplode(CCNode *pSender);
 
 protected:	
