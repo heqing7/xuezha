@@ -1,4 +1,4 @@
-#include "GameOverScene.h"
+ï»¿#include "GameOverScene.h"
 #include "GameMainScene.h"
 #include "common.h"
 #include "conv.h"
@@ -54,7 +54,7 @@ bool GameOverScene::initWithScore(int score)
 		this->addChild(pMenu, 1);
 
 		//add score
-		CCString* strScore = CCString::createWithFormat("²Å¶ÔÁË%d¸ö×Ö", score);
+		CCString* strScore = CCString::createWithFormat("æ‰å¯¹äº†%dä¸ªå­—", score);
 		CC_BREAK_IF(!score);
 		std::string strValue = strScore->getCString();
 #ifdef _WIN32

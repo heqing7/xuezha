@@ -40,15 +40,7 @@ public:
 
 	}
 
-	virtual bool init()
-	{
-		m_hero = CCSprite::create("/hero/xuezha0.png");
-		if (m_hero)
-		{
-			return true;
-		}
-		return false;
-	}
+    virtual bool init();
 
 	void setStatus(int status)
 	{

@@ -11,18 +11,13 @@ class GameMainScene : public CCLayer
 public:
 	CREATE_FUNC(GameMainScene);
 
-	virtual GameMainScene::~GameMainScene()
-	{
-		if (m_poem)
-		{
-			CC_SAFE_RELEASE(m_poem);
-		}
-	}
 	virtual bool init();
 
 	static CCScene* scene();
 	
 	void update(float delta);
+
+    virtual void keyBackClicked();//Android ·µ»Ø¼ü
 
 protected:
 

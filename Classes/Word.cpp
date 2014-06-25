@@ -23,7 +23,7 @@ bool Word::init(int track, std::string& strWord)
 
 		m_track = track;
 		m_strWord = strWord;
-		m_speed = 5;
+		m_speed = 3;
 
 		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 		float unitSize = visibleSize.width / 4 - 25;
@@ -65,7 +65,7 @@ CCPoint Word::getWordPosition(int track)
 	case TRACK_RIGHT:
 		return ccp(visibleSize.width - m_layerColorBG->getContentSize().width, visibleSize.height - m_layerColorBG->getContentSize().height / 2);
 	default:
-		CCAssert(FALSE, "error not support!");
+		CCAssert(0, "error not support!");
 		return ccp(0, 0);
 	}
 }

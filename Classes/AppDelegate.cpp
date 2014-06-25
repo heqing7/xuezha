@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "WelcomeScene.h"
 #include "GameMainScene.h"
 USING_NS_CC;
 
@@ -18,6 +19,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     pDirector->setOpenGLView(pEGLView);
 	
+    // 铺满屏幕，如果宽高比不一致，会拉伸导致失真
+    pEGLView->setDesignResolutionSize(320, 480, kResolutionExactFit);
     // turn on display FPS
     //pDirector->setDisplayStats(true);
 
@@ -26,8 +29,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     //CCScene *pScene = HelloWorld::scene();
-	CCScene* pScene = GameMainScene::scene();
-
+	CCScene* pScene = WelcomeScene::scene();
+    //CCScene* pScene = GameMainScene::scene();
     // run
     pDirector->runWithScene(pScene);
 

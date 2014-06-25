@@ -1,45 +1,46 @@
-#include "GameMainScene.h"
+ï»¿#include "GameMainScene.h"
 #include "Word.h"
 #include "conv.h"
 #include "GameOverScene.h"
+#include "WelcomeScene.h"
 
 static char* g_orgPoem[] = 
 {
-	"Ôç",
-	"·¢",
-	"°×",
-	"µÛ",
-	"³Ç",
-	"Àî",
-	"°×",
-	"³¯",
-	"´Ç",
-	"°×",
-	"µÛ",
-	"²Ê",
-	"ÔÆ",
-	"¼ä",
-	"Ç§",
-	"Àï",
-	"½­",
-	"Áê",
-	"Ò»",
-	"ÈÕ",
-	"»¹",
-	"Á½",
-	"°¶",
-	"Ô³",
-	"Éù",
-	"Ìä",
-	"²»",
-	"×¡",
-	"Çá",
-	"ÖÛ",
-	"ÒÑ",
-	"¹ý",
-	"Íò",
-	"ÖØ",
-	"É½",
+	"æ—©",
+	"å‘",
+	"ç™½",
+	"å¸",
+	"åŸŽ",
+	"æŽ",
+	"ç™½",
+	"æœ",
+	"è¾ž",
+	"ç™½",
+	"å¸",
+	"å½©",
+	"äº‘",
+	"é—´",
+	"åƒ",
+	"é‡Œ",
+	"æ±Ÿ",
+	"é™µ",
+	"ä¸€",
+	"æ—¥",
+	"è¿˜",
+	"ä¸¤",
+	"å²¸",
+	"çŒ¿",
+	"å£°",
+	"å•¼",
+	"ä¸",
+	"ä½",
+	"è½»",
+	"èˆŸ",
+	"å·²",
+	"è¿‡",
+	"ä¸‡",
+	"é‡",
+	"å±±",
 };
 
 CCScene* GameMainScene::scene()
@@ -80,11 +81,20 @@ bool GameMainScene::init()
 		m_poem = CCArray::createWithCapacity(100);
 		m_poem->retain();
 
+
+        this->setKeypadEnabled(true);//ç›‘å¬android æŒ‰é”®
+
 		srand(time(0));
 		this->scheduleUpdate();
 		return true;
 	} while (0);
 	return false;
+}
+
+void GameMainScene::keyBackClicked()
+{
+    CCDirector::sharedDirector()->setDepthTest(true);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, WelcomeScene::scene()));
 }
 
 void GameMainScene::updateHeroPos()
@@ -161,7 +171,7 @@ bool GameMainScene::checkGameOver()
 
 void GameMainScene::autoNewWordObj()
 {
-	if ((m_genCnt++ % 25) != 0)
+	if ((m_genCnt++ % 50) != 0)
 	{
 		return;
 	}
@@ -201,18 +211,18 @@ int GameMainScene::getScore()
 void GameMainScene::update(float delta)
 {
 	/*	
-		1.¸üÐÂheroÎ»ÖÃ
-		2.¼ì²âheroÓëwordÊÇ·ñÅö×²£¬ÓÐÔòÆô¶¯ÅÐ¶¨Âß¼­
-		3.¼ì²âwordÊÇ·ñ³¬³ö½çÃæµ×²¿
-		4.Éú³ÉºóÐøword
-		5.¼ì²âÓÎÏ·ÊÇ·ñ½áÊø
+		1.æ›´æ–°heroä½ç½®
+		2.æ£€æµ‹heroä¸Žwordæ˜¯å¦ç¢°æ’žï¼Œæœ‰åˆ™å¯åŠ¨åˆ¤å®šé€»è¾‘
+		3.æ£€æµ‹wordæ˜¯å¦è¶…å‡ºç•Œé¢åº•éƒ¨
+		4.ç”ŸæˆåŽç»­word
+		5.æ£€æµ‹æ¸¸æˆæ˜¯å¦ç»“æŸ
 	*/
 	updateHeroPos();	
 	checkCapturedAndMissed();
 	autoNewWordObj();
 	if(checkGameOver())
 	{
-		//Ìø×ª½áÊø³¡¾°
+		//è·³è½¬ç»“æŸåœºæ™¯
 		int score = getScore();
 		CCDirector::sharedDirector()->setDepthTest(true);  
 		CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5,GameOverScene::sceneWithScore(score)));

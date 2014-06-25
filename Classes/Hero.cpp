@@ -1,5 +1,15 @@
 #include "Hero.h"
 
+bool Hero::init()
+{
+    m_hero = CCSprite::create("hero/xuezha0.png");
+    if (m_hero)
+    {
+        return true;
+    }
+    return false;
+}
+
 void Hero::touchDelegateRelease()
 {
 	this->release();
@@ -24,12 +34,12 @@ void Hero::onEnter()
 
 		CCAnimation* animation = CCAnimation::create();
 		CC_BREAK_IF(!animation);
-		animation->addSpriteFrameWithFileName("/hero/xuezha0.png");
-		animation->addSpriteFrameWithFileName("/hero/xuezha1.png");
-		animation->addSpriteFrameWithFileName("/hero/xuezha2.png");
-		animation->addSpriteFrameWithFileName("/hero/xuezha3.png");
-		animation->addSpriteFrameWithFileName("/hero/xuezha4.png");
-		animation->addSpriteFrameWithFileName("/hero/xuezha5.png");
+		animation->addSpriteFrameWithFileName("hero/xuezha0.png");
+		animation->addSpriteFrameWithFileName("hero/xuezha1.png");
+		animation->addSpriteFrameWithFileName("hero/xuezha2.png");
+		animation->addSpriteFrameWithFileName("hero/xuezha3.png");
+		animation->addSpriteFrameWithFileName("hero/xuezha4.png");
+		animation->addSpriteFrameWithFileName("hero/xuezha5.png");
 		animation->setDelayPerUnit(0.1f);
 		//animation->setLoops(0);
 		animation->setRestoreOriginalFrame(true);
