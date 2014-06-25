@@ -13,34 +13,34 @@ static char* g_orgPoem[] =
 	"城",
 	"李",
 	"白",
-	"朝",
-	"辞",
-	"白",
-	"帝",
-	"彩",
-	"云",
-	"间",
-	"千",
-	"里",
-	"江",
-	"陵",
-	"一",
-	"日",
-	"还",
-	"两",
-	"岸",
-	"猿",
-	"声",
-	"啼",
-	"不",
-	"住",
-	"轻",
-	"舟",
-	"已",
-	"过",
-	"万",
-	"重",
-	"山",
+// 	"朝",
+// 	"辞",
+// 	"白",
+// 	"帝",
+// 	"彩",
+// 	"云",
+// 	"间",
+// 	"千",
+// 	"里",
+// 	"江",
+// 	"陵",
+// 	"一",
+// 	"日",
+// 	"还",
+// 	"两",
+// 	"岸",
+// 	"猿",
+// 	"声",
+// 	"啼",
+// 	"不",
+// 	"住",
+// 	"轻",
+// 	"舟",
+// 	"已",
+// 	"过",
+// 	"万",
+// 	"重",
+// 	"山",
 };
 
 static char* g_errWords[] = 
@@ -120,6 +120,7 @@ void GameMainScene::keyBackClicked()
 
 void GameMainScene::updateHeroPos()
 {
+	//Todo
 	if (m_hero->isLeft())
 	{
 		m_hero->setPosition(ccp(m_hero->getSize().width / 2, m_hero->getSize().height / 2));
@@ -156,10 +157,10 @@ void GameMainScene::checkCapturedAndMissed()
 		{
 			if (word->isEquilWord(base.c_str()))
 			{
-				//rst = "";
+				word->miss();
 				m_result.push_back(rst);
 			}
-            word->miss();
+			
 			m_poem->removeObject(word);
 		}
 		else

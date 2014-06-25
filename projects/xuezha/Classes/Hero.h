@@ -24,12 +24,12 @@ public:
 	enum 
 	{
 		STATUS_NORMAL = 0,
-		STATUS_CAPTURE,
-		STATUS_OVER,
+		STATUS_CORRECT,
+		STATUS_ERROR,
 	};
 public:
 	CREATE_FUNC(Hero);
-// 	virtual bool init();
+
 	Hero()
 	{
 		m_curLocation = LOCATION_MID;
@@ -42,10 +42,7 @@ public:
 
     virtual bool init();
 
-	void setStatus(int status)
-	{
-		
-	}
+	void setStatus(int status);
 
 	void moveTo(int direction)
 	{
@@ -71,6 +68,8 @@ public:
 			break;
 		}
 	}
+
+	void updateBloodBar();
 
 	CCSize getSize()
 	{
@@ -110,7 +109,7 @@ protected:
 
 	virtual void touchDelegateRetain();
 	virtual void touchDelegateRelease();
-
+	void statusEnd(CCNode * node);
 
 	float distance(CCPoint pt1, CCPoint pt2)
 	{
@@ -122,9 +121,15 @@ protected:
 
 	int				m_status;
 	int				m_curLocation;
+	float			m_blood;
+	CCTexture2D*	m_error;
+	CCTexture2D*	m_correct;
 	CCSprite*		m_hero;
 
 	CCPoint			touchStartP;
+
+	CCProgressTimer* m_bloodBar;
+	CCSprite*		 m_bloodSprite;
 };
 
 

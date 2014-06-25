@@ -67,7 +67,7 @@ bool GameOverScene::initWithScore(int score)
 		this->addChild(pLabel, 1);
 
 		// backgroud
-		CCSprite* pSprite = CCSprite::create("gameover.png");
+		CCSprite* pSprite = CCSprite::create("gameover.jpg");
         CC_BREAK_IF(!pSprite);
 		pSprite->setPosition(ccp(0, 0));
 		pSprite->setAnchorPoint(ccp(0, 0));
