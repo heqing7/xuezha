@@ -20,12 +20,15 @@ public:
 
     virtual void keyBackClicked();//Android ·µ»Ø¼ü
 
+	virtual void onEnter();
     virtual void onExit();
 
 protected:
 
 	void autoNewWordObj();
-	void updateHeroPos();
+
+	void autoNewProps();
+
 	void checkCapturedAndMissed();
 	bool checkGameOver();
 	int getScore();
@@ -47,6 +50,9 @@ protected:
 	std::vector<std::string>	m_result;	
 
     //WordSource*                 m_content;
+	int							m_correctTimes;
+	int							m_errorTimes;
+
 
 	int						m_curWordIndex;
 	int						m_genCnt;

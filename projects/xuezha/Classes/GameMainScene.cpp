@@ -106,6 +106,12 @@ bool GameMainScene::init()
 }
 
 
+void GameMainScene::onEnter()
+{
+	m_correctTimes = 0;
+	m_errorTimes = 0;
+}
+
 void GameMainScene::onExit()
 {
     CC_SAFE_RELEASE(m_poem);
@@ -157,6 +163,7 @@ void GameMainScene::checkCapturedAndMissed()
 		{
 			if (word->isEquilWord(base.c_str()))
 			{
+				m_errorTimes++;
 				word->miss();
 				m_result.push_back(rst);
 			}
@@ -172,13 +179,15 @@ void GameMainScene::checkCapturedAndMissed()
 			{
 				if (word->isEquilWord(base.c_str()))
 				{
+					m_correctTimes++;
                     m_hero->capture();
 					rst = g_orgPoem[m_curWordIndex - 1];
 					m_result.push_back(rst);
 				}
                 else
                 {
-                    m_hero->super();
+					m_errorTimes++;
+                    m_hero->hurt();
                 }
 				word->setVisible(false);
 				m_poem->removeObject(word);
@@ -241,6 +250,14 @@ void GameMainScene::autoNewWordObj()
 	} while (0);
 }
 
+void GameMainScene::autoNewProps()
+{
+	if (m_correctTimes % 7 == 0)
+	{
+
+	}
+}
+
 int GameMainScene::getScore()
 {
 	int		score = 0;
@@ -265,9 +282,9 @@ void GameMainScene::update(float delta)
 		4.生成后续word
 		5.检测游戏是否结束
 	*/
-	//updateHeroPos();	
 	checkCapturedAndMissed();
 	autoNewWordObj();
+	autoNewProps();
 	if(checkGameOver())
 	{
 		//跳转结束场景
