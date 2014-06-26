@@ -26,6 +26,7 @@ public:
 		STATUS_NORMAL = 0,
 		STATUS_CORRECT,
 		STATUS_ERROR,
+        STATUS_SUPER,
 	};
 public:
 	CREATE_FUNC(Hero);
@@ -53,6 +54,7 @@ public:
 				if (m_curLocation != LOCATION_LEFT)
 				{
 					m_curLocation--;
+                    moveAll();
 				}
 			}
 			break;
@@ -61,6 +63,7 @@ public:
 				if (m_curLocation != LOCATION_RIGHT)
 				{
 					m_curLocation++;
+                    moveAll();
 				}
 			}
 			break;
@@ -71,10 +74,15 @@ public:
 
 	void updateBloodBar();
 
-	CCSize getSize()
+	CCSize getHeroSize()
 	{
 		return m_hero->getContentSize();
 	}
+
+    CCPoint getHeroPosition()
+    {
+        return m_hero->getPosition();
+    }
 
 	bool isLeft()
 	{
@@ -92,6 +100,13 @@ public:
 	}
 
     void hurt();
+
+    void super();
+
+    bool isDead()
+    {
+        return m_blood <= 0;
+    }
 
     void capture();
 
@@ -116,20 +131,21 @@ protected:
 		return (float)(sqrt((pt1.x-pt2.x)*(pt1.x-pt2.x)+(pt1.y-pt2.y)*(pt1.y-pt2.y)));
 	}
 
-
+    void moveAll();
 protected:
 
 	int				m_status;
 	int				m_curLocation;
-	float			m_blood;
+	int 			m_blood;
 	CCTexture2D*	m_error;
 	CCTexture2D*	m_correct;
 	CCSprite*		m_hero;
 
 	CCPoint			touchStartP;
-
-	CCProgressTimer* m_bloodBar;
-	CCSprite*		 m_bloodSprite;
+    CCRepeatForever*  m_normalAnc;
+    CCAnimation*      m_superAnc;
+	CCProgressTimer*  m_bloodBar;
+	CCSprite*		  m_bloodSprite;
 };
 
 

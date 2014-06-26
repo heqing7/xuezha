@@ -1,6 +1,7 @@
-#include "WelcomeScene.h"
+﻿#include "WelcomeScene.h"
 #include "GameMainScene.h"
 #include "common.h"
+#include "conv.h"
 
 CCScene* WelcomeScene::scene()
 {
@@ -22,8 +23,11 @@ bool WelcomeScene::init()
         CC_BREAK_IF(!CCLayer::init());
         CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
         CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-        
-        CCLabelTTF* pLabel = CCLabelTTF::create("Welcmoe", "Arial", 28);
+        std::string header = "小孩子不要玩";
+#ifdef _WIN32
+        GBKToUTF(header);
+#endif
+        CCLabelTTF* pLabel = CCLabelTTF::create(header.c_str(), "Verdana-Bold", 28);
         // position the label on the center of the screen
         pLabel->setColor(ccc3(0, 0, 0));
         pLabel->setPosition(ccp(origin.x + visibleSize.width / 2,

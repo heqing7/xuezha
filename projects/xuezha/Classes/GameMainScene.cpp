@@ -4,7 +4,7 @@
 #include "GameOverScene.h"
 #include "WelcomeScene.h"
 
-static char* g_orgPoem[] = 
+static const char* g_orgPoem[] = 
 {
 	"早",
 	"发",
@@ -13,43 +13,43 @@ static char* g_orgPoem[] =
 	"城",
 	"李",
 	"白",
-// 	"朝",
-// 	"辞",
-// 	"白",
-// 	"帝",
-// 	"彩",
-// 	"云",
-// 	"间",
-// 	"千",
-// 	"里",
-// 	"江",
-// 	"陵",
-// 	"一",
-// 	"日",
-// 	"还",
-// 	"两",
-// 	"岸",
-// 	"猿",
-// 	"声",
-// 	"啼",
-// 	"不",
-// 	"住",
-// 	"轻",
-// 	"舟",
-// 	"已",
-// 	"过",
-// 	"万",
-// 	"重",
-// 	"山",
+    "朝",
+    "辞",
+    "白",
+    "帝",
+    "彩",
+    "云",
+    "间",
+    "千",
+    "里",
+    "江",
+    "陵",
+    "一",
+    "日",
+    "还",
+    "两",
+    "岸",
+    "猿",
+    "声",
+    "啼",
+    "不",
+    "住",
+    "轻",
+    "舟",
+    "已",
+    "过",
+    "万",
+    "重",
+    "山",
 };
 
-static char* g_errWords[] = 
+static const char* g_errWords[] = 
 {
     "撸",
     "呵",
     "哈",
     "啊",
-    "呵",
+    "咯",
     "撸",
 };
 
@@ -84,15 +84,15 @@ bool GameMainScene::init()
 		m_hero = Hero::create();
 		this->addChild(m_hero, 100);
 
-		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-		CCPoint orgPoint = CCDirector::sharedDirector()->getVisibleOrigin();
+// 		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+// 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+// 		CCPoint orgPoint = CCDirector::sharedDirector()->getVisibleOrigin();
 	
-		m_hero->setPosition(ccp(visibleSize.width / 2, m_hero->getSize().height / 2));
+		//m_hero->setPosition(ccp(visibleSize.width / 2, m_hero->getSize().height / 2));
 
 		m_poem = CCArray::createWithCapacity(100);
 		m_poem->retain();
-
+         
 //         m_content = new WordSource();
 //         m_content->initWiteFilePath();
 
@@ -121,18 +121,18 @@ void GameMainScene::keyBackClicked()
 void GameMainScene::updateHeroPos()
 {
 	//Todo
-	if (m_hero->isLeft())
-	{
-		m_hero->setPosition(ccp(m_hero->getSize().width / 2, m_hero->getSize().height / 2));
-	}
-	else if(m_hero->isRight())
-	{
-		m_hero->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width - m_hero->getSize().width / 2, m_hero->getSize().height / 2));
-	}
-	else
-	{
-		m_hero->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width / 2, m_hero->getSize().height / 2));
-	}
+// 	if (m_hero->isLeft())
+// 	{
+// 		m_hero->setPosition(ccp(m_hero->getSize().width / 2, m_hero->getSize().height / 2));
+// 	}
+// 	else if(m_hero->isRight())
+// 	{
+// 		m_hero->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width - m_hero->getSize().width / 2, m_hero->getSize().height / 2));
+// 	}
+// 	else
+// 	{
+// 		m_hero->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width / 2, m_hero->getSize().height / 2));
+// 	}
 }
 
 void GameMainScene::checkCapturedAndMissed()
@@ -165,8 +165,8 @@ void GameMainScene::checkCapturedAndMissed()
 		}
 		else
 		{
-			CCPoint p1 = m_hero->getPosition();
-			CCSize s1 = m_hero->getSize();
+			CCPoint p1 = m_hero->getHeroPosition();
+			CCSize s1 = m_hero->getHeroSize();
 			CCSize s2 = word->getSize();
 			if (isCollision(p1, p2, 40,35,18.25,17.75))
 			{
@@ -178,7 +178,7 @@ void GameMainScene::checkCapturedAndMissed()
 				}
                 else
                 {
-                    m_hero->hurt();
+                    m_hero->super();
                 }
 				word->setVisible(false);
 				m_poem->removeObject(word);
@@ -194,6 +194,10 @@ bool GameMainScene::checkGameOver()
 	{
 		return true;
 	}
+    if (m_hero->isDead())
+    {
+        return true;
+    }
 	return false;
 }
 
@@ -261,7 +265,7 @@ void GameMainScene::update(float delta)
 		4.生成后续word
 		5.检测游戏是否结束
 	*/
-	updateHeroPos();	
+	//updateHeroPos();	
 	checkCapturedAndMissed();
 	autoNewWordObj();
 	if(checkGameOver())
@@ -269,7 +273,7 @@ void GameMainScene::update(float delta)
 		//跳转结束场景
 		int score = getScore();
 		CCDirector::sharedDirector()->setDepthTest(true);  
-		CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5,GameOverScene::sceneWithScore(score)));
+        CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(1.0f, GameOverScene::sceneWithScore(score), true));
 	}
 }
 

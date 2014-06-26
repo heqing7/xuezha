@@ -23,7 +23,7 @@ bool Word::init(int track, std::string& strWord)
 
 		m_track = track;
 		m_strWord = strWord;
-		m_speed = 3;
+		m_speed = 4;
 
 		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 		float unitSize = visibleSize.width / 4 - 25;
@@ -49,15 +49,15 @@ void Word::update(float delta)
 {
     if (m_layerColorBG->getPositionY() < CCDirector::sharedDirector()->getVisibleSize().height / 3 * 2)
     {
-        m_speed = 4;
+        m_speed = 8;
     }
     else if (m_layerColorBG->getPositionY() < CCDirector::sharedDirector()->getVisibleSize().height / 3)
     {
-        m_speed = 5;
+        m_speed = 10;
     }
     else if (m_layerColorBG->getPositionY() < CCDirector::sharedDirector()->getVisibleSize().height / 5)
     {
-        m_speed = 7;
+        m_speed = 14;
     }
 	m_layerColorBG->setPosition(m_layerColorBG->getPositionX(), m_layerColorBG->getPositionY() - m_speed);
 }

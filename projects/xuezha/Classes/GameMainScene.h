@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "Hero.h"
-#include "WordSource.h"
+//#include "WordSource.h"
 #include <vector>
 USING_NS_CC;
 
@@ -46,7 +46,7 @@ protected:
 
 	std::vector<std::string>	m_result;	
 
-    WordSource*                 m_content;
+    //WordSource*                 m_content;
 
 	int						m_curWordIndex;
 	int						m_genCnt;
