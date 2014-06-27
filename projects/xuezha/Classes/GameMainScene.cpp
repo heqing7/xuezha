@@ -124,8 +124,8 @@ void GameMainScene::keyBackClicked()
     CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, WelcomeScene::scene()));
 }
 
-void GameMainScene::updateHeroPos()
-{
+//void GameMainScene::updateHeroPos()
+//{
 	//Todo
 // 	if (m_hero->isLeft())
 // 	{
@@ -139,7 +139,7 @@ void GameMainScene::updateHeroPos()
 // 	{
 // 		m_hero->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width / 2, m_hero->getSize().height / 2));
 // 	}
-}
+//}
 
 void GameMainScene::checkCapturedAndMissed()
 {
